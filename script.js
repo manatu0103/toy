@@ -69,27 +69,39 @@ const products = [
 const productList = document.querySelector(".product-list"); // クラス名で取得
 const productDetails = document.getElementById("product-details");
 
+// 商品一覧を描画する関数
+function displayProducts() {
+    const productList = document.getElementById("product-list");
 
-// 商品リストを表示
-products.forEach((product, index) => {
-    const productCard = document.createElement("div");
-    productCard.classList.add("product");
-    productCard.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${product.price}</p>
-    `;
-    productCard.addEventListener("click", () => showDetails(index));
-    productList.appendChild(productCard);
-});
+    products.forEach(product => {
+        const productDiv = document.createElement("div");
+        productDiv.className = "product";
+        productDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.price}</p>
+        `;
 
-// 商品詳細を表示
-function showDetails(index) {
-    const product = products[index];
+        // クリックイベントを追加
+        productDiv.addEventListener("click", () => displayProductDetails(product));
+
+        productList.appendChild(productDiv);
+    });
+}
+
+// 商品詳細を表示する関数
+function displayProductDetails(product) {
+    const productDetails = document.getElementById("product-details");
     productDetails.innerHTML = `
         <h2>${product.name}</h2>
         <img src="${product.image}" alt="${product.name}">
-        <p><strong>価格:</strong> ${product.price}</p>
         <p>${product.description}</p>
+        <p><strong>価格:</strong> ${product.price}</p>
     `;
 }
+
+// 初期化処理
+document.addEventListener("DOMContentLoaded", () => {
+    displayProducts();
+});
+
